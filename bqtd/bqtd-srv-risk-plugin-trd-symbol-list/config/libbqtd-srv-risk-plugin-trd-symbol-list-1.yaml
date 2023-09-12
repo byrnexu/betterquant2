@@ -1,0 +1,12 @@
+name: risk-plugin-trd-symbol-list
+version: 1.0.0
+enable: true
+
+logger: 
+  loggerName: "trd-symbol-list"
+  maxFiles: 10
+  maxSize: 104857600
+  outputDir: "data/logs/bqtd-srv"
+  outputFilename: "risk-plugin-trd-symbol-list"
+  rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+  stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

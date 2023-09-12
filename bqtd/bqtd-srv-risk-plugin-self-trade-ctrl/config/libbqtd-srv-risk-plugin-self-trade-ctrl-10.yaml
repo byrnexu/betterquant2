@@ -1,0 +1,14 @@
+name: risk-plugin-self-trade-ctrl
+version: 1.0.0
+enable: true
+
+maxSelfTradeTriggerTimesAllowed: 0
+
+logger: 
+  loggerName: "self-trade-ctrl"
+  maxFiles: 10
+  maxSize: 104857600
+  outputDir: "data/logs/bqtd-srv"
+  outputFilename: "risk-plugin-self-trade-ctrl"
+  rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+  stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

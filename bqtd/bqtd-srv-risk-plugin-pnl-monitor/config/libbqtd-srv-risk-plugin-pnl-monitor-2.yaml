@@ -1,0 +1,12 @@
+name: risk-plugin-pnl-monitor
+version: 1.0.0
+enable: true
+
+logger: 
+  loggerName: "pnl-monitor"
+  maxFiles: 10
+  maxSize: 104857600
+  outputDir: "data/logs/bqtd-srv"
+  outputFilename: "risk-plugin-pnl-monitor"
+  rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+  stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

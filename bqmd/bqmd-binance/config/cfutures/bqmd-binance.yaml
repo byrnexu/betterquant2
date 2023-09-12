@@ -1,0 +1,60 @@
+marketCode: Binance
+symbolType: CFutures
+
+saveMarketData: true
+
+addrOfSymbolTable: "https://dapi.binance.com/dapi/v1/exchangeInfo"
+addrOfWSPub: "wss://dstream.binance.com/ws"
+
+enableSymbolTableMaint: true
+
+wsParam: svcName=WSCli; milliSecIntervalOfSendPingAndCheckConn=5000; sendPing=1; expireTimeOfConn=120000
+wsTaskDispatcherParam: moduleName=wsCliTaskDispatcher; taskRandAssignedThreadPoolSize=0; taskSpecificThreadPoolSize=2
+
+milliSecIntervalOfSymbolTableMaint: 30000
+timeoutOfQuerySymbolTableFromExch: 30000
+
+dbEngParam: svcName=dbEng; dbName=BetterQuant; host=0.0.0.0; port=3306; username=root; password=showmethemoney
+dbTaskDispatcherParam: moduleName=dbTaskDispatcher
+
+milliSecIntervalOfTBLMonitorOfSymbolInfo: 10000
+milliSecIntervalOfTopicGroupMustSubMaint: 1000
+
+topicGroupMustSubInAdvance: config/bqmd-binance/cfutures/TopicGroupMustSubInAdvance.yaml
+topicGroupInBlackList: config/bqmd-binance/cfutures/TopicGroupInBlackList.yaml
+thresholdOfReSubWithoutRecvMD: config/bqmd-binance/cfutures/ThresholdOfReSub.yaml
+
+addrOfSnapshot: https://dapi.binance.com/dapi/v1/depth?symbol=symbolCode&limit=1000
+timeoutOfQuerySnapshot: 60000
+
+defaultExchMDTypeBooks: depth@100ms
+defaultBooksDepthGroup: [5, 20, 200, 400]
+booksDepthLevelOfSave: 20
+
+subAndUnSubSvcParam: moduleName=subAndUnSubSvcOfBinance; taskRandAssignedThreadPoolSize=0; taskSpecificThreadPoolSize=1
+mdStorageSvcParam: moduleName=mdStorageSvcOfBinance; numOfUnprocessedTaskAlert=1000; taskSpecificThreadPoolSize=0
+
+storageRootPath: data
+thresholdOfMDRowNumInCache: 100
+maxNumOfHisMDCanBeQeuryEachTime: 10000
+
+flowCtrlRule:
+  - taskGroup:
+    - {name: Sub, weight: 1}
+    - {name: UnSub, weight: 1}
+    timeDur: 2000
+    limitNum: 1
+
+logger: 
+  queueSize: 10000
+  backingThreadsCount: 1
+  defaultLoggerName: defaultLogger
+  loggerGroup: 
+    - 
+      loggerName: "defaultLogger"
+      maxFiles: 10
+      maxSize: 104857600
+      outputDir: "data/logs/bqmd/bqmd-binance-cfutures"
+      outputFilename: "bqmd-binance-cfutures"
+      rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+      stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

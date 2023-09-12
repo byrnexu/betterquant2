@@ -1,0 +1,73 @@
+acctId: 10000
+marketCodeGroup: [SSE, SZSE]
+
+api:
+  clientId: 1
+  apiName: XTP
+  traderServerIP: 122.112.139.0
+  traderServerPort: 6102
+  traderUsername: 253191001650
+  traderPassword: 43uw2Zpe
+  softwareKey: b8aa7173bba3470e390d787219b2112e
+  localIP:
+
+  loggerPath: data/logs/bqtd/bqtd-xtp/
+  secIntervalOfHeartBeat: 15
+  secIntervalOfReconnect: 10
+
+simedMode:
+  enabled: false
+  milliSecIntervalOfSimOrderStatus: 0
+
+tblMonitorOfSymbolInfo: "marketCode in ('SSE', 'SZSE')"
+
+shmSegmentSizeOfMapRel: 104857600 # 100mb
+shmSegmentSizeOfOpenContracts: 0 # 0mb
+
+rawTDHandlerParam: moduleName=rawTDHandler; numOfUnprocessedTaskAlert=1000; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=2
+
+tdSrvChannel: "TD@TDGWChannel@Trade"
+tdSrvTaskDispatcherParam: moduleName=tdSrvTaskDispatcher; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=2
+
+riskMgrChannel: "RISK@TDGWChannel@Trade"
+
+secIntervalOfSyncAssetsSnapshot: 60
+secIntervalOfSyncUnclosedOrderInfo: 60
+secIntervalOfReloadExternalStatusCode: 10
+secIntervalOfSaveMapRelOfCliIdAndOrdId: 10
+secIntervalOfReloadFeeInfo: 3 # 注意手续费测试用例依赖于这个间隔
+
+milliSecIntervalOfSyncTask: 5
+
+secAgoTheOrderNeedToBeSynced: 60
+secAgoTheOrderCouldBeSync: 30
+
+dbEngParam: svcName=dbEng; dbName=BetterQuant; host=0.0.0.0; port=3306; username=root; password=showmethemoney
+dbTaskDispatcherParam: moduleName=dbTaskDispatcher
+
+flowCtrlRule:
+  - taskGroup:  # each key
+    - {name: onOrder, weight: 1}
+    - {name: onCancelOrder, weight: 1}
+    timeDur: 10000
+    limitNum: 2000
+  - taskGroup:  # each ip
+    - {name: extendConnLifecycle, weight: 1}
+    - {name: syncAssetsSnapshot, weight: 10}
+    - {name: syncUnclosedOrderInfo, weight: 2}
+    timeDur: 10000
+    limitNum: 1000
+
+logger: 
+  queueSize: 10000
+  backingThreadsCount: 1
+  defaultLoggerName: defaultLogger
+  loggerGroup: 
+    - 
+      loggerName: "defaultLogger"
+      maxFiles: 10
+      maxSize: 104857600
+      outputDir: "data/logs/bqtd/bqtd-xtp"
+      outputFilename: "bqtd-xtp"
+      rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+      stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

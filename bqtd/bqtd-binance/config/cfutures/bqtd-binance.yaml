@@ -1,0 +1,67 @@
+marketCode: Binance
+symbolType: CFutures
+acctId: 10003
+
+simedMode:
+  feeCurrency: ""
+  feeRatioOfTaker: 0.003
+  feeRatioOfMaker: 0.002
+  milliSecIntervalOfSimOrderStatus: 0
+
+tdSrvChannel: "TD@TDGWChannel@Trade"
+tdSrvTaskDispatcherParam: moduleName=tdSrvTaskDispatcher; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=2
+
+riskMgrChannel: "RISK@TDGWChannel@Trade"
+
+addrOfWS: "wss://dstream.binance.com/ws" 
+addrOfHttp: "https://dapi.binance.com"
+
+recvWindow: 60000
+
+secIntervalOfExtendConnLifecycle: 600
+secIntervalOfSyncAssetsSnapshot: 60
+secIntervalOfSyncUnclosedOrderInfo: 55
+secIntervalOfReloadExternalStatusCode: 10
+
+milliSecIntervalOfSyncTask: 5
+
+secAgoTheOrderNeedToBeSynced: 30
+
+timeoutOfGetListenKey: 60000
+timeoutOfQueryAssetInfoGroup: 60000
+timeoutOfQueryOrderInfo: 60000
+
+wsParam: svcName=WSCli; milliSecIntervalOfSendPingAndCheckConn=5000; sendPing=1; expireTimeOfConn=10800000
+wsTaskDispatcherParam: moduleName=wsCliTaskDispatcher; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=1
+
+dbEngParam: svcName=dbEng; dbName=BetterQuant; host=0.0.0.0; port=3306; username=root; password=showmethemoney
+dbTaskDispatcherParam: moduleName=dbTaskDispatcher
+
+milliSecIntervalOfTBLMonitorOfSymbolInfo: 10000
+
+flowCtrlRule:
+  - taskGroup:  # each key
+    - {name: onOrder, weight: 1}
+    - {name: onCancelOrder, weight: 1}
+    timeDur: 10000
+    limitNum: 40
+  - taskGroup:  # each ip
+    - {name: extendConnLifecycle, weight: 1}
+    - {name: syncAssetsSnapshot, weight: 10}
+    - {name: syncUnclosedOrderInfo, weight: 1}
+    timeDur: 60000
+    limitNum: 200
+
+logger: 
+  queueSize: 10000
+  backingThreadsCount: 1
+  defaultLoggerName: defaultLogger
+  loggerGroup: 
+    - 
+      loggerName: "defaultLogger"
+      maxFiles: 10
+      maxSize: 104857600
+      outputDir: "data/logs/bqtd/bqtd-binance-cfutures"
+      outputFilename: "bqtd-binance-cfutures"
+      rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+      stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

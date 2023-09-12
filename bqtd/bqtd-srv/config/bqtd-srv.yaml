@@ -1,0 +1,54 @@
+tdGWChannel: "TD@TDGWChannel@Trade"
+stgEngChannel: "TD@StgEngChannel@Trade"
+
+plugInChannel: "RISK@PlugInChannel@Trade"
+
+timeoutOfReqInCache: 600
+
+dbEngParam: svcName=dbEng; dbName=BetterQuant; host=0.0.0.0; port=3306; username=root; password=showmethemoney
+dbTaskDispatcherParam: moduleName=dbTaskDispatcher
+
+orderPreProcTaskDispatcherParam: moduleName=OrderPreProcTaskDispatcherParam;taskRandAssignedThreadPoolSize=0;taskSpecificThreadPoolSize=1;preCreateTaskSpecificThreadPool=1
+
+monitorSymbolTableChanges: false  
+milliSecIntervalOfTBLMonitorOfSymbolInfo: 10000
+milliSecIntervalOfSyncTask: 100
+milliSecIntervalRiskCtrlConfMonitor: 5000 
+
+tblMonitorOfSymbolInfo: "symbolType in ('CN_MainBoard', 'CN_Futures', 'CN_TechBoard', 'CN_StartupBoard', 'CN_SecondBoard')"
+
+secIntervalOfMonitorOfFlowCtrlRule: 3
+
+riskCtrlModuleComb:
+  - 
+    step: "global"
+    fieldGroupUsedToGenHash: ""
+    tdSrvTaskDispatcherParam: moduleName=TDSrvTaskDispatcherParam;taskRandAssignedThreadPoolSize=0;taskSpecificThreadPoolSize=1;preCreateTaskSpecificThreadPool=1
+    riskCtrlpluginPath: ./plugin/global
+    tdSrvRiskSegmentSize: 10485760 # 10mb
+  - 
+    step: "acctId"
+    fieldGroupUsedToGenHash: "acctId"
+    tdSrvTaskDispatcherParam: moduleName=TDSrvTaskDispatcherParam;taskRandAssignedThreadPoolSize=0;taskSpecificThreadPoolSize=1;preCreateTaskSpecificThreadPool=1
+    riskCtrlpluginPath: ./plugin/acctId
+    tdSrvRiskSegmentSize: 10485760 # 10mb
+  - 
+    step: "acctId-trdAcctId"
+    fieldGroupUsedToGenHash: "acctId&trdAcctId"
+    tdSrvTaskDispatcherParam: moduleName=TDSrvTaskDispatcherParam;taskRandAssignedThreadPoolSize=0;taskSpecificThreadPoolSize=4;preCreateTaskSpecificThreadPool=1
+    riskCtrlpluginPath: ./plugin/acctId-trdAcctId
+    tdSrvRiskSegmentSize: 10485760 # 10mb
+
+logger: 
+  queueSize: 10000
+  backingThreadsCount: 1
+  defaultLoggerName: defaultLogger
+  loggerGroup: 
+    - 
+      loggerName: "defaultLogger"
+      maxFiles: 10
+      maxSize: 104857600
+      outputDir: "data/logs/bqtd-srv"
+      outputFilename: "bqtd-srv"
+      rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+      stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

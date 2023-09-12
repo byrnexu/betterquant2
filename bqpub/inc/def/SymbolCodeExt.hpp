@@ -1,0 +1,23 @@
+/*!
+ * \file SymbolCodeExt.hpp
+ * \project BetterQuant
+ *
+ * \author byrnexu
+ * \date 2022/09/08
+ *
+ * \brief
+ */
+
+#pragma once
+
+#include "util/Pch.hpp"
+
+namespace bq {
+
+struct SymbolCode;
+using SymbolCodeSPtr = std::shared_ptr<SymbolCode>;
+
+std::string SymbolCodeGroup2Str(
+    const std::vector<SymbolCodeSPtr> symbolInfoGroup);
+
+}  // namespace bq

@@ -1,0 +1,12 @@
+name: risk-plugin-close-tday-stg
+version: 1.0.0
+enable: true
+
+logger: 
+  loggerName: "close-tday-stg"
+  maxFiles: 10
+  maxSize: 104857600
+  outputDir: "data/logs/bqtd-srv"
+  outputFilename: "risk-plugin-close-tday-stg"
+  rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+  stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

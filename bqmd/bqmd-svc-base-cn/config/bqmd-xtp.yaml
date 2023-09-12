@@ -1,0 +1,49 @@
+marketCodeGroup: [SSE, SZSE]
+symbolType: Spot 
+
+subAllMarketData: true
+saveMarketData: false
+enableSymbolTableMaint: false
+
+checkIFExchTsOfMDIsInc: false
+
+api:
+  apiName: XTP
+  clientId: 1
+  quoteServerIP: 119.3.103.38
+  quoteServerPort: 6002
+  quoteUsername: 253191001650
+  quotePassword: 43uw2Zpe
+  protocolType: Tcp
+  localIP:
+
+  loggerPath: data/logs/bqmd/bqmd-xtp/
+  secIntervalOfHeartBeat: 15
+  secIntervalOfReconnect: 10
+  udpBufferSize: 1024
+  udpAsynOutputLog: true
+
+
+rawMDHandlerParam: moduleName=rawMDHandler; numOfUnprocessedTaskAlert=1000; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=4
+
+mdStorageSvcParam: moduleName=mdStorageSvc; numOfUnprocessedTaskAlert=1000; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=4
+numOfMDWrittenToTDEngAtOneTime: 100
+
+tdEngParam: host=0.0.0.0; port=0; db=; username=root; password=taosdata; connPoolSize=4
+
+dbEngParam: svcName=dbEng; dbName=BetterQuant; host=0.0.0.0; port=3306; username=root; password=showmethemoney
+dbTaskDispatcherParam: moduleName=dbTaskDispatcher
+
+logger: 
+  queueSize: 10000
+  backingThreadsCount: 1
+  defaultLoggerName: defaultLogger
+  loggerGroup: 
+    - 
+      loggerName: "defaultLogger"
+      maxFiles: 10
+      maxSize: 104857600
+      outputDir: "data/logs/bqmd/bqmd-xtp"
+      outputFilename: "bqmd-xtp"
+      rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+      stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

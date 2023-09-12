@@ -1,0 +1,71 @@
+acctId: 10001
+marketCodeGroup: [SHFE, CZCE, DCE, CFFEX, INE, GFEX]
+
+api:
+  apiName: CTP
+  flowPath: data/TD/CTP/flowpath-td
+  frontAddr: tcp://180.168.146.187:10201
+# frontAddr: tcp://180.168.146.187:10130
+  appID: simnow_client_test
+  authCode: 0000000000000000
+  brokerID: 9999
+  userID: 209057
+  password: 1122@3344X
+
+simedMode:
+  enabled: false
+  milliSecIntervalOfSimOrderStatus: 0
+
+tblMonitorOfSymbolInfo: "marketCode in ('SHFE', 'CZCE', 'DCE', 'CFFEX', 'INE', 'GFEX')"
+
+shmSegmentSizeOfMapRel: 104857600 # 100mb
+shmSegmentSizeOfOpenedContracts: 10485760 # 10mb
+
+rawTDHandlerParam: moduleName=rawTDHandler; numOfUnprocessedTaskAlert=1000; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=2
+
+tdSrvChannel: "TD@TDGWChannel@Trade"
+tdSrvTaskDispatcherParam: moduleName=tdSrvTaskDispatcher; taskRandAllocThreadPoolSize=0; taskSpecificThreadPoolSize=2
+
+riskMgrChannel: "RISK@TDGWChannel@Trade"
+
+secIntervalOfSyncAssetsSnapshot: 60
+secIntervalOfSyncUnclosedOrderInfo: 25
+secIntervalOfReloadExternalStatusCode: 10
+secIntervalOfSaveMapRelOfCliIdAndOrdId: 10
+secIntervalOfReloadFeeInfo: 3 # 注意手续费测试用例依赖于这个间隔
+
+milliSecIntervalOfSyncTask: 5
+
+thresholdOfQryAllOrder: 10
+secAgoTheOrderNeedToBeSynced: 60
+secAgoTheOrderCouldBeSync: 30
+
+dbEngParam: svcName=dbEng; dbName=BetterQuant; host=0.0.0.0; port=3306; username=root; password=showmethemoney
+dbTaskDispatcherParam: moduleName=dbTaskDispatcher
+
+flowCtrlRule:
+  # - taskGroup:  # each key
+  #   - {name: onOrder, weight: 1}
+  #   - {name: onCancelOrder, weight: 1}
+  #   timeDur: 1
+  #   limitNum: 1000
+  # - taskGroup:  # each ip
+  #   - {name: extendConnLifecycle, weight: 1}
+  #   - {name: syncAssetsSnapshot, weight: 1}
+  #   - {name: syncUnclosedOrderInfo, weight: 1}
+  #   timeDur: 2000
+  #   limitNum: 1
+
+logger: 
+  queueSize: 10000
+  backingThreadsCount: 1
+  defaultLoggerName: defaultLogger
+  loggerGroup: 
+    - 
+      loggerName: "defaultLogger"
+      maxFiles: 10
+      maxSize: 104857600
+      outputDir: "data/logs/bqtd/bqtd-ctp"
+      outputFilename: "bqtd-ctp"
+      rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+      stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

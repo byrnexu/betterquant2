@@ -1,0 +1,33 @@
+stgEngChannel: "WEBSRV@StgEngChannel@Trade"
+
+stgEngTaskDispatcherParam: moduleName=WebSrvTaskDispatcherParam;taskRandAssignedThreadPoolSize=0;taskSpecificThreadPoolSize=1
+
+dbEngParam: svcName=dbEng; dbName=BetterQuant; host=0.0.0.0; port=3306; username=root; password=showmethemoney
+dbTaskDispatcherParam: moduleName=dbTaskDispatcher
+
+tdEngParam: host=0.0.0.0; port=0; db=; username=root; password=taosdata; connPoolSize=1
+maxNumOfRecReturned: 10000
+
+thresholdForSessionTimeout: 3600 # 1 hours
+
+cacheInfoOfDBRet: 
+  - 
+    sql: "select * from baseSymbolInfo"
+    msOfValidTime: "86400000"
+  - 
+    sql: 'SELECT * from baseSymbolInfo where symbolType in ("CN_MainBoard", "CN_Futures", "CN_TechBoard", "CN_StartupBoard", "CN_SecondBoard")'
+    msOfValidTime: "10000"
+
+logger: 
+  queueSize: 10000
+  backingThreadsCount: 1
+  defaultLoggerName: defaultLogger
+  loggerGroup: 
+    - 
+      loggerName: "defaultLogger"
+      maxFiles: 10
+      maxSize: 104857600
+      outputDir: "data/logs/bqweb-srv"
+      outputFilename: "bqweb-srv"
+      rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+      stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"

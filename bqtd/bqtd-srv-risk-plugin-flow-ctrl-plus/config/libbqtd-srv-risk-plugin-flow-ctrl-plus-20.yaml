@@ -1,0 +1,27 @@
+name: risk-plugin-flow-ctrl-plus
+version: 1.0.0
+enable: true
+
+FlowCtrlTargetState:
+  orderSizeEachTime: true
+  orderSizeTotal: true
+  orderAmtEachTime: true
+  orderAmtTotal: true
+  orderTimesTotal: true
+  orderTimesWithinTime: true
+  cancelOrderTimesTotal: true
+  cancelOrderTimesWithinTime: true
+  rejectOrderTimesTotal: true
+  rejectOrderTimesWithinTime: true
+  holdVolTotal: true
+  holdAmtTotal: true
+  openTDayTotal: true
+
+logger: 
+  loggerName: "flow-ctrl-plus"
+  maxFiles: 10
+  maxSize: 104857600
+  outputDir: "data/logs/bqtd-srv"
+  outputFilename: "risk-plugin-flow-ctrl-plus"
+  rotatingSinkPattern: "[%Y%m%d %T.%f] [%L] [%t] [%s:%#] %v"
+  stdoutSinkPattern: "[%Y%m%d %T.%f] [%^%L%$] [%t] [%s:%#] %v"
