@@ -3,7 +3,7 @@ set -u
 set -e
 
 readonly PARALLEL_COMPILE_THREAD_NUM=6
-readonly SOLUTION_ROOT_DIR=/mnt/storage/work/bitquant2
+readonly SOLUTION_ROOT_DIR=/mnt/storage/work/betterquant2
 
 readonly PROJ_NAME=$(pwd | awk -F'/' '{print $NF}')
 readonly FILE_OF_CPP="\.cpp$\|\.cc$\|\.hpp$\|\.h$"

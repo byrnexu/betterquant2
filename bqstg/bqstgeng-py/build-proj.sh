@@ -3,7 +3,7 @@ set -u
 set -e
 
 readonly PARALLEL_COMPILE_THREAD_NUM=6
-readonly SOLUTION_ROOT_DIR=/mnt/storage/work/bitquant2
+readonly SOLUTION_ROOT_DIR=/mnt/storage/work/betterquant2
 
 readonly PYTHON_INC_DIR=/usr/include/python3.8
 

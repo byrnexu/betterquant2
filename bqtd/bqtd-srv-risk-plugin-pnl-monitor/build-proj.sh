@@ -3,7 +3,7 @@ set -u
 set -e
 
 readonly PARALLEL_COMPILE_THREAD_NUM=6
-readonly SOLUTION_ROOT_DIR=/mnt/storage/work/bitquant2
+readonly SOLUTION_ROOT_DIR=/mnt/storage/work/betterquant2
 
 readonly PLUGIN_NO=$(cat CMakeLists.txt | grep -i 'project(' | \
   awk '{print $1}' | awk -F'-' '{print $NF}')
