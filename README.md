@@ -6,8 +6,6 @@
 
 欢迎fork/star，你的支持是这个项目越来越好的最大动力，BetterQuant 沟通交流群 431100199 （加入前请star项目并提供github用户名）
 
-**最近在外面看机会，联系方式：byrnexu@qq.com**   
-
 ## 用户手册
 参考 [WIKI](https://github.com/byrnexu/betterquant2/wiki) 
 
